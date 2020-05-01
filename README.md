@@ -1,9 +1,27 @@
 # Kounter
 
+![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 Project hosting an easy-to-use **Counter**
 or more advanced use-cases with a type-safe **MapWithDefault**.
 
-## Counter / MutableCounter
+## Installation  [![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion)
+
+```kotlin
+dependencies {
+    // Check jcenter badge for latestVersion 🔝
+    implementation("com.github.pgreze:kounter:$latestVersion")
+}
+
+repositories {
+    jcenter()
+}
+```
+
+## Usage
+
+### Counter / MutableCounter
 
 A specialization of the Map class allowing to count objects.
 
@@ -44,7 +62,7 @@ like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/htm
 
 *Known limitation:* Only support Int for now.
 
-## MapWithDefault / MutableMapWithDefault
+### MapWithDefault / MutableMapWithDefault
 
 This is internals of **Counter / MutableCounter**.
 
