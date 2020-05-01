@@ -1,6 +1,19 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.3.50"
+    id("org.jetbrains.kotlin.jvm") version "1.3.72"
     `java-library`
+}
+
+group = "com.github.pgreze"
+version = properties.getOrDefault("VERSION", "WIP").toString()
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform {
+        includeEngines("spek2")
+    }
 }
 
 repositories {
@@ -10,7 +23,7 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
 
-    testImplementation(kotlin("test"))
+    testImplementation("org.amshove.kluent:kluent:1.61")
     val junit5 = "5.3.1"
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5")
