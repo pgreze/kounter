@@ -2,16 +2,16 @@
 
 ![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion)
 
-Project hosting an easy-to-use **Counter**
-or more advanced use-cases with a type-safe **MapWithDefault**.
+Choose the easy-to-use **Counter** or the fully flexible **MapWithDefault**.
 
-## Installation  [![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion)
+## Installation
 
 ```kotlin
 dependencies {
-    // Check jcenter badge for latestVersion 🔝
-    implementation("com.github.pgreze:kounter:$latestVersion")
+    // Check 🔝 jcenter badge 🔝 for the latest $version
+    implementation("com.github.pgreze:kounter:$version")
 }
 
 repositories {
@@ -64,9 +64,9 @@ like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/htm
 
 ### MapWithDefault / MutableMapWithDefault
 
-This is internals of **Counter / MutableCounter**.
+**Counter / MutableCounter** are internally using these classes.
 
-This is also an alternative of
+There are also an alternative of
 [withDefault](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html)
 which is a memory efficient way to specify a default value for a Map but sadly,
 not reflecting this change in its signature.<br/>
