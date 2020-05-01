@@ -33,7 +33,7 @@ class MutableMapWithDefaultTest : Spek({
             val sets = mutableMapOf<String, Set<String>>()
                 .setDefault { setOf() }
 
-            sets += "A0" to mutableSetOf("R0")
+            sets += "A0" to setOf("R0")
             sets["A1"] += setOf("R1")
 
             sets shouldBeEqualTo mapOf(

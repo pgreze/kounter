@@ -1,11 +1,11 @@
 # Kounter
 
-Project hosting an easy-to-use Counter class
-or everything in order to create your custom one.
+Project hosting an easy-to-use **Counter**
+or more advanced use-cases with a type-safe **MapWithDefault**.
 
 ## Counter / MutableCounter
 
-A specialization of the Map class allowing to count.
+A specialization of the Map class allowing to count objects.
 
 Usage:
 
@@ -46,10 +46,14 @@ like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/htm
 
 ## MapWithDefault / MutableMapWithDefault
 
-Alternative of [withDefault](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html),
-the memory efficient way to specify a default value for a Map.<br/>
-Sadly, this change is not reflected to the type system,
-forcing users to use an alternative [getValue](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-value.html) method,
+This is internals of **Counter / MutableCounter**.
+
+This is also an alternative of 
+[withDefault](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html)
+which is a memory efficient way to specify a default value for a Map but sadly,
+not reflecting this change in its signature.<br/>
+It's forcing users to use an unnatural
+[getValue](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/get-value.html) extension method,
 which is not the [most intuitive way of using a Map](https://discuss.kotlinlang.org/t/map-withdefault-not-defaulting/7691).
 
 Proposed alternative is slightly changing the original Map interface:
@@ -63,25 +67,25 @@ interface MapWithDefault<K, V> : Map<K, V> {
 Allowing to unlock a better syntax:
 
 ```kotlin
-val money = mutableMapOf("Alice" to 10)
+val money = mutableMapOf("Alice" to 5)
     .setDefault { 0 }
 
 money["Alice"] += 10
-money["Bob"] += 10
+money["Bob"] += 3
 
-println(money) // {Alice=20, Bob=10}
-```
+println(money) // {Alice=15, Bob=3}
+``` 
 
-*Known limitation:* previous syntax is not working with Set/List/Map:
+Which is shining when used with Set/List/Map:
 
 ```kotlin
-val sets = mutableMapOf<String, MutableSet<String>>()
-    .setDefault { mutableSetOf() }
+val sets = mutableMapOf<String, Set<String>>()
+    .setDefault { setOf() }
 
-sets["A1"] += "R1" // Assignment operators ambiguity:
-// public operator fun <T> Set<String>.plus(element: String): Set <String> defined In kotlin.collections
-// public Inline operator fun <T> MutableCollection<in String>.plusAssign(element: String): Unit defined in kotlin.collections
+sets += "Alice" to setOf("f1.txt")
+sets["Bob"] += setOf("f2.md")
 
-// Solution:
-sets["A1"].plusAssign("R1")
+println(sets) // {"A0"= setOf("f1.txt"), "A1"= setOf("f2.md")}
 ```
+
+⚠️ always use immutable collections if possible, due to Kotlin limitations.
