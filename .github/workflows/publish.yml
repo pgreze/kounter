@@ -9,7 +9,7 @@ on:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       # setup
