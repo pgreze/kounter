@@ -1,8 +1,4 @@
-# Kounter
-
-![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion)
+# Kounter ![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion)
 
 Choose the easy-to-use **Counter** or the fully flexible **MapWithDefault**.
 
