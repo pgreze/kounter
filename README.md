@@ -1,6 +1,48 @@
-# Kollections
+# Kounter
 
-A collection of Kotlin collections.
+Project hosting an easy-to-use Counter class
+or everything in order to create your custom one.
+
+## Counter / MutableCounter
+
+A specialization of the Map class allowing to count.
+
+Usage:
+
+```kotlin
+val lints = mutableCounterOf("warnings" to 20)
+
+lints["warnings"] += 3
+lints["errors"] += 1
+
+println(lints) // {warnings=23, errors=1}
+```
+
+Helpers:
+
+```kotlin
+counterOf("aabbbcc")                    // {a=2, b=3, c=2}
+counterOf(arrayOf('a', 'b', 'b', 'c'))  // {a=1, b=2, c=1}
+counterOf(listOf('a', 'a', 'b', 'c'))   // {a=2, b=1, c=1}
+counterOf(setOf('a', 'b', 'c'))         // {a=1, b=1, c=1}
+```
+
+To perform mathematical operations on counters, use following methods:
+
+```kotlin
+val c1 = counterOf("ab")
+val c2 = counterOf("ccd")
+c1.plusAll(c2) // {a=2, b=3, c=2}
+
+val chars = mutableCounterOf("ab")
+chars.addAll(counterOf("ccd")) // {a=2, b=3, c=2}
+```
+
+Port of [Python Counter](https://docs.python.org/3.8/library/collections.html#collections.Counter),
+inspired by [older references](https://github.com/python/cpython/blob/ec007cb43faf5f33d06efbc28152c7fdcb2edb9c/Lib/collections/__init__.py#L516)
+like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/html_node/Bag.html).
+
+*Known limitation:* Only support Int for now.
 
 ## MapWithDefault / MutableMapWithDefault
 
@@ -43,44 +85,3 @@ sets["A1"] += "R1" // Assignment operators ambiguity:
 // Solution:
 sets["A1"].plusAssign("R1")
 ```
-
-## Counter / MutableCounter
-
-Specialization of the Map class allowing to count objects.
-
-Usage:
-
-```kotlin
-val lints = mutableCounterOf("warnings" to 20)
-
-lints["warnings"] += 3
-lints["errors"] += 1
-
-println(lints) // {warnings=23, errors=1}
-```
-
-Helpers:
-
-```kotlin
-counterOf("aabbbcc")                    // {a=2, b=3, c=2}
-counterOf(arrayOf('a', 'b', 'b', 'c'))  // {a=1, b=2, c=1}
-counterOf(listOf('a', 'a', 'b', 'c'))   // {a=2, b=1, c=1}
-counterOf(setOf('a', 'b', 'c'))         // {a=1, b=1, c=1}
-```
-
-To perform mathematical operations on counters, use following methods:
-
-```kotlin
-val c1 = counterOf("ab")
-val c2 = counterOf("ccd")
-c1.plusAll(c2) // {a=2, b=3, c=2}
-
-val chars = mutableCounterOf("ab")
-chars.addAll(counterOf("ccd")) // {a=2, b=3, c=2}
-```
-
-Port of [Python Counter](https://docs.python.org/3.8/library/collections.html#collections.Counter),
-inspired by [older references](https://github.com/python/cpython/blob/ec007cb43faf5f33d06efbc28152c7fdcb2edb9c/Lib/collections/__init__.py#L516)
-like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/html_node/Bag.html).
-
-*Known limitation:* Only support Int for now.
