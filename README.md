@@ -88,4 +88,5 @@ sets["Bob"] += setOf("f2.md")
 println(sets) // {"A0"= setOf("f1.txt"), "A1"= setOf("f2.md")}
 ```
 
-⚠️ always use immutable collections if possible, due to Kotlin limitations.
+⚠️ always use immutable collections if possible,
+otherwise you may face resolution conflicts between main container and sub-ones.
