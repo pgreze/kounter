@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.github.pgreze"
-version = System.getenv("GITHUB_REF")?.trimStart('v') ?: "WIP"
+version = System.getenv("GITHUB_REF")?.split('/')?.last()?.trimStart('v') ?: "WIP"
 description = "Counting easily with Kotlin"
 val github = "https://github.com/pgreze/kounter"
 
