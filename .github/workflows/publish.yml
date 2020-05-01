@@ -10,12 +10,7 @@ on:
 
 jobs:
   build:
-    # https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners
-    # https://help.github.com/en/actions/configuring-and-managing-workflows/configuring-a-workflow#configuring-a-build-matrix
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
       # setup
       - uses: actions/checkout@v2
