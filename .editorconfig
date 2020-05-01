@@ -1,0 +1,17 @@
+root = true
+
+[*]
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{kt,kts}]
+max_line_length = 120
+indent_size=4
+disabled_rules=import-ordering
+
+[*.md]
+# Markdown feature: https://github.com/Microsoft/vscode/issues/1679#issue-124117942
+trim_trailing_whitepace = false

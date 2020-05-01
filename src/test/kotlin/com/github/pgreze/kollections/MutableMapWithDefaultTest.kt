@@ -76,7 +76,7 @@ class MutableMapWithDefaultTest : Spek({
             // Type mismatch:
             // Required: Counter<String> /* = MapWithDefault<String, Int> */
             // Found: Map<String, Int>
-            //counters["A1"] += counterOf("Bob" to 1)
+            // counters["A1"] += counterOf("Bob" to 1)
 
             counters shouldBeEqualTo mapOf(
                 "A0" to mapOf("Alice" to 1)
@@ -93,7 +93,7 @@ class MutableMapWithDefaultTest : Spek({
             // Assignment operators ambiguity:
             // public operator fun <T> Set<String>.plus(element: String): Set <String> defined In kotlin.collections
             // public Inline operator fun <T> MutableCollection<in String>.plusAssign(element: String): Unit defined in kotlin.collections
-            //sets["A1"] += setOf("R1")
+            // sets["A1"] += setOf("R1")
 
             sets shouldBeEqualTo mapOf(
                 "A0" to setOf("R0")
@@ -105,7 +105,7 @@ class MutableMapWithDefaultTest : Spek({
                 .setDefault { mutableListOf() }
 
             lists += "A0" to mutableListOf("R0")
-            //lists["A1"] += mutableListOf("R1")
+            // lists["A1"] += mutableListOf("R1")
 
             lists shouldBeEqualTo mapOf(
                 "A0" to listOf("R0")
@@ -117,7 +117,7 @@ class MutableMapWithDefaultTest : Spek({
                 .setDefault { mutableMapOf() }
 
             maps += "A0" to mutableMapOf("Alice" to 1)
-            //maps["A1"] += mutableMapOf("Bob" to 1)
+            // maps["A1"] += mutableMapOf("Bob" to 1)
 
             maps shouldBeEqualTo mapOf(
                 "A0" to mapOf("Alice" to 1)
@@ -129,7 +129,7 @@ class MutableMapWithDefaultTest : Spek({
                 .setDefault { mutableCounterOf() }
 
             counters += "A0" to mutableCounterOf("Alice" to 1)
-            //counters["A1"] += mutableCounterOf("Bob" to 1)
+            // counters["A1"] += mutableCounterOf("Bob" to 1)
 
             counters shouldBeEqualTo mapOf(
                 "A0" to mapOf("Alice" to 1)

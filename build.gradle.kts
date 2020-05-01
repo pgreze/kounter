@@ -1,6 +1,7 @@
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
-    `java-library`
+    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+    id("io.gitlab.arturbosch.detekt") version "1.7.4"
 }
 
 group = "com.github.pgreze"

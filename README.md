@@ -48,7 +48,7 @@ like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/htm
 
 This is internals of **Counter / MutableCounter**.
 
-This is also an alternative of 
+This is also an alternative of
 [withDefault](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/with-default.html)
 which is a memory efficient way to specify a default value for a Map but sadly,
 not reflecting this change in its signature.<br/>
@@ -74,7 +74,7 @@ money["Alice"] += 10
 money["Bob"] += 3
 
 println(money) // {Alice=15, Bob=3}
-``` 
+```
 
 Which is shining when used with Set/List/Map:
 
