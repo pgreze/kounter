@@ -35,7 +35,8 @@ class MultiCollectionsTest : Spek({
         it("is immutable") {
             multiListWithDefaultOf<String, Int>() shouldBeEqualTo mapOf<String, Int>()
 
-            multiListWithDefaultOf<String, Int>(defaultValue = { mutableListOf() }) shouldBeEqualTo mapOf<String, Int>()
+            multiListWithDefaultOf<String, Int>(defaultValue = { mutableListOf() }) shouldBeEqualTo
+                mapOf<String, Int>()
 
             multiListWithDefaultOf("Alice" to listOf(1, 2)) shouldBeEqualTo mapOf(
                 "Alice" to listOf(1, 2)
@@ -59,7 +60,8 @@ class MultiCollectionsTest : Spek({
         it("is immutable") {
             multiMapWithDefaultOf<String, Int, Boolean>() shouldBeEqualTo mapOf<String, Map<Int, Boolean>>()
 
-            multiMapWithDefaultOf<Boolean, String, Int> { counterOf() } shouldBeEqualTo mapOf<String, Map<Int, Boolean>>()
+            multiMapWithDefaultOf<Boolean, String, Int> { counterOf() } shouldBeEqualTo
+                mapOf<String, Map<Int, Boolean>>()
 
             multiMapWithDefaultOf("Alice" to mapOf(true to 2)) shouldBeEqualTo mapOf(
                 "Alice" to mapOf(true to 2)
@@ -84,7 +86,8 @@ class MultiCollectionsTest : Spek({
         it("is immutable") {
             multiCounterWithDefaultOf<Boolean, String>() shouldBeEqualTo mapOf<Boolean, Counter<String>>()
 
-            multiCounterWithDefaultOf<Boolean, String>(defaultValue = { mutableCounterOf() }) shouldBeEqualTo mapOf<Boolean, Counter<String>>()
+            multiCounterWithDefaultOf<Boolean, String>(defaultValue = { mutableCounterOf() }) shouldBeEqualTo
+                mapOf<Boolean, Counter<String>>()
 
             multiCounterWithDefaultOf("Alice" to counterOf(true to 2)) shouldBeEqualTo mapOf(
                 "Alice" to counterOf(true to 2)
@@ -95,7 +98,7 @@ class MultiCollectionsTest : Spek({
             val counters = mutableMultiCounterWithDefaultOf<String, String>()
 
             counters += "A0" to counterOf("Alice" to 1)
-            //counters["A1"] += counterOf("Bob" to 1) // Type mismatch:
+            // counters["A1"] += counterOf("Bob" to 1) // Type mismatch:
             // Required: Counter<String> /* = MapWithDefault<String, Int> */
             // Found: Map<String, Int>
 
