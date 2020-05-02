@@ -1,3 +1,5 @@
+import io.gitlab.arturbosch.detekt.detekt
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
     // Lint
@@ -15,6 +17,10 @@ val github = "https://github.com/pgreze/kounter"
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
+    baseline = file("detekt-baseline.xml")
 }
 
 tasks.withType<Test> {
