@@ -7,11 +7,12 @@ import org.spekframework.spek2.style.specification.describe
 class MutableMapWithDefaultTest : Spek({
 
     describe("a mutableMap with setDefault") {
-        val counter = mutableMapOf(
+        val map = mutableMapOf(
             "Bob" to 10,
             "Charlie" to 5,
             "Dave" to 8
-        ).setDefault { 0 }
+        )
+        val counter by memoized { map.setDefault { 0 } }
 
         it("support +-*/= notations") {
             counter["Alice"] += 20
@@ -25,6 +26,9 @@ class MutableMapWithDefaultTest : Spek({
                 "Charlie" to 30,
                 "Dave" to 4
             )
+        }
+        it("is equivalent to the original map without modification") {
+            counter shouldBeEqualToOriginalMap map
         }
     }
 })
