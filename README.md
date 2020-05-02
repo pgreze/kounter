@@ -93,8 +93,8 @@ println(money) // {Alice=15, Bob=3}
 Which is shining when used with Set/List/Map:
 
 ```kotlin
-val sets = mutableMapOf<String, Set<String>>()
-    .setDefault { setOf() }
+val sets = mutableMultiSetWithDefaultOf<String, String>()
+// Alias for mutableMapOf<String, Set<String>>().setDefault { setOf() }
 
 sets += "Alice" to setOf("f1.txt")
 sets["Bob"] += setOf("f2.md")
@@ -102,5 +102,10 @@ sets["Bob"] += setOf("f2.md")
 println(sets) // {"A0"= setOf("f1.txt"), "A1"= setOf("f2.md")}
 ```
 
-⚠️ always use immutable collections if possible,
-otherwise you may face resolution conflicts between main container and sub-ones.
+Following helpers are available for common native collections:
+
+|      | + setDefault           | Mutable + setDefault          |
+|------|------------------------|-------------------------------|
+| List | multiListWithDefaultOf | mutableMultiListWithDefaultOf |
+| Set  | multiSetWithDefaultOf  | mutableMultiSetWithDefaultOf  |
+| Map  | multiMapWithDefaultOf  | mutableMultiMapWithDefaultOf  |
