@@ -7,11 +7,13 @@ import org.spekframework.spek2.style.specification.describe
 class MutableCounterTest : Spek({
 
     describe("a mutable counter") {
-        val counter = mutableCounterOf(
-            "Bob" to 10,
-            "Charlie" to 5,
-            "Dave" to 8
-        )
+        val counter by memoized {
+            mutableCounterOf(
+                "Bob" to 10,
+                "Charlie" to 5,
+                "Dave" to 8
+            )
+        }
 
         it("support +-*/= notations") {
             counter["Alice"] += 20
@@ -24,6 +26,13 @@ class MutableCounterTest : Spek({
                 "Bob" to -5,
                 "Charlie" to 30,
                 "Dave" to 4
+            )
+        }
+        it("is equivalent to the original map") {
+            counter shouldBeEqualToOriginalMap mapOf(
+                "Bob" to 10,
+                "Charlie" to 5,
+                "Dave" to 8
             )
         }
     }

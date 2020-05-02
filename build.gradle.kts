@@ -1,8 +1,7 @@
-import io.gitlab.arturbosch.detekt.detekt
-
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
     // Lint
+    jacoco
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("io.gitlab.arturbosch.detekt") version "1.7.4"
     // Deploy
@@ -23,9 +22,16 @@ configure<io.gitlab.arturbosch.detekt.extensions.DetektExtension> {
     baseline = file("detekt-baseline.xml")
 }
 
-tasks.withType<Test> {
+tasks.test {
     useJUnitPlatform {
         includeEngines("spek2")
+    }
+    finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+    reports {
+        xml.isEnabled = true
+        html.isEnabled = System.getenv("CI") != "true"
     }
 }
 

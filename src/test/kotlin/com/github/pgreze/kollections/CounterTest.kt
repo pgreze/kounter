@@ -15,6 +15,9 @@ class CounterTest : Spek({
         it("can be converted to a mutable one") {
             c.toMutableCounter() shouldBeEqualTo mutableCounterOf("Alice" to 1)
         }
+        it("is equivalent to the original map") {
+            c shouldBeEqualToOriginalMap mapOf("Alice" to 1)
+        }
     }
 
     describe("2 counters") {
