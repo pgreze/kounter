@@ -19,7 +19,11 @@ repositories {
 
 ### Counter / MutableCounter
 
-A specialization of the Map class allowing to count objects.
+A specialization of the Map class allowing to count objects.<br/>
+This is similar to [Guava Multiset](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/Multiset.html)
+or [Python Counter](https://docs.python.org/3.8/library/collections.html#collections.Counter),
+inspired by [older references](https://github.com/python/cpython/blob/ec007cb43faf5f33d06efbc28152c7fdcb2edb9c/Lib/collections/__init__.py#L516)
+like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/html_node/Bag.html).
 
 Usage:
 
@@ -51,12 +55,6 @@ c1.plusAll(c2) // {a=2, b=3, c=2}
 val chars = mutableCounterOf("ab")
 chars.addAll(counterOf("ccd")) // {a=2, b=3, c=2}
 ```
-
-Port of [Python Counter](https://docs.python.org/3.8/library/collections.html#collections.Counter),
-inspired by [older references](https://github.com/python/cpython/blob/ec007cb43faf5f33d06efbc28152c7fdcb2edb9c/Lib/collections/__init__.py#L516)
-like [Smalltalk Bag class](http://www.gnu.org/software/smalltalk/manual-base/html_node/Bag.html).
-
-*Known limitation:* Only support Int for now.
 
 ### MapWithDefault / MutableMapWithDefault
 
@@ -109,3 +107,8 @@ Following helpers are available for common native collections:
 | List | multiListWithDefaultOf | mutableMultiListWithDefaultOf |
 | Set  | multiSetWithDefaultOf  | mutableMultiSetWithDefaultOf  |
 | Map  | multiMapWithDefaultOf  | mutableMultiMapWithDefaultOf  |
+
+Alternative: [Guava collection package](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/package-summary.html)
+including [Multimap](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/Multimap.html)
+implemented by [ListMultimap](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/ListMultimap.html)
+or [SetMultimap](https://guava.dev/releases/19.0/api/docs/com/google/common/collect/SetMultimap.html).
