@@ -9,10 +9,10 @@ class MapWithDefaultTest : Spek({
     describe("a map with setDefault") {
         val m = mapOf("Alice" to 1).setDefault { 0 }
 
-        it("support requesting known values") {
+        it("return value for known values") {
             m["Alice"] shouldBeEqualTo 1
         }
-        it("support requesting unknown values") {
+        it("return default for unknown values") {
             m["Bob"] shouldBeEqualTo 0
         }
     }
