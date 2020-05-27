@@ -11,7 +11,8 @@ plugins {
 }
 
 group = "com.github.pgreze"
-version = System.getenv("GITHUB_REF")?.split('/')?.last()?.trimStart('v') ?: "WIP"
+val tagVersion = System.getenv("GITHUB_REF")?.split('/')?.last()
+version = tagVersion?.trimStart('v') ?: "WIP"
 description = "Counting easily with Kotlin"
 val github = "https://github.com/pgreze/kounter"
 
@@ -62,7 +63,7 @@ tasks.dokka {
     configuration {
         sourceLink {
             // URL showing where the source code can be accessed through the web browser
-            url = "https://github.com/pgreze/kounter/tree/master/"
+            url = "https://github.com/pgreze/kounter/tree/${tagVersion ?: "master"}/"
             // Suffix which is used to append the line number to the URL. Use #L for GitHub
             lineSuffix = "#L"
         }
