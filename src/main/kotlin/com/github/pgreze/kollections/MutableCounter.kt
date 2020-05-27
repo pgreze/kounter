@@ -1,5 +1,9 @@
 package com.github.pgreze.kollections
 
+/**
+ * Mutable alternative of [Counter],
+ * also bringing the convenient [addAll] method.
+ */
 interface MutableCounter<T> : Counter<T>, MutableMapWithDefault<T, Int> {
     /** Add all occurrences of [from] keys into this counter. */
     fun addAll(from: Map<out T, Int>)

@@ -1,9 +1,16 @@
 package com.github.pgreze.kollections
 
+/**
+ * Mutable alternative of [MapWithDefault].
+ */
 interface MutableMapWithDefault<K, V> :
     MapWithDefault<K, V>,
     MutableMap<K, V>
 
+/**
+ * Create a new [MutableMapWithDefault] from given map
+ * and for each unknown key, returns the value provided by [defaultValue] provider.
+ */
 fun <K, V> MutableMap<K, V>.setDefault(
     defaultValue: (key: K) -> V
 ): MutableMapWithDefault<K, V> =

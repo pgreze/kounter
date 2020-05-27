@@ -3,6 +3,9 @@
  */
 package com.github.pgreze.kollections
 
+/**
+ * A specialized [MapWithDefault] allowing to count multiple elements.
+ */
 typealias Counter<T> = MapWithDefault<T, Int>
 
 fun <T> Map<T, Int>.toCounter(): Counter<T> =
