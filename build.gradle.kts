@@ -7,10 +7,12 @@ plugins {
     // Deploy
     `maven-publish`
     id("com.jfrog.bintray") version "1.8.5"
+    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 group = "com.github.pgreze"
-version = System.getenv("GITHUB_REF")?.split('/')?.last()?.trimStart('v') ?: "WIP"
+val tagVersion = System.getenv("GITHUB_REF")?.split('/')?.last()
+version = tagVersion?.trimStart('v') ?: "WIP"
 description = "Counting easily with Kotlin"
 val github = "https://github.com/pgreze/kounter"
 
@@ -33,6 +35,40 @@ tasks.jacocoTestReport {
         xml.isEnabled = true
         html.isEnabled = System.getenv("CI") != "true"
     }
+}
+
+val moveCss by tasks.registering {
+    description = "Move style.css in kounter folder, easier for distribution."
+    fun File.rewriteStyleLocations() {
+        readText().replace("../style.css", "style.css")
+            .also { writeText(it) }
+    }
+    fun File.recursivelyRewriteStyleLocations() {
+        list()?.map(this::resolve)?.forEach {
+            if (it.isDirectory) it.recursivelyRewriteStyleLocations() else it.rewriteStyleLocations()
+        }
+    }
+    doLast {
+        val dokkaOutputDirectory = file(tasks.dokka.get().outputDirectory)
+        val kounterFolder = dokkaOutputDirectory.resolve("kounter")
+        kounterFolder.recursivelyRewriteStyleLocations()
+        dokkaOutputDirectory.resolve("style.css").also {
+            it.renameTo(kounterFolder.resolve(it.name))
+        }
+    }
+}
+tasks.dokka {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/dokka"
+    configuration {
+        sourceLink {
+            // URL showing where the source code can be accessed through the web browser
+            url = "https://github.com/pgreze/kounter/tree/${tagVersion ?: "master"}/"
+            // Suffix which is used to append the line number to the URL. Use #L for GitHub
+            lineSuffix = "#L"
+        }
+    }
+    finalizedBy(moveCss)
 }
 
 repositories {
