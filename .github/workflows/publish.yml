@@ -42,8 +42,9 @@ jobs:
       - name: Generate Dokka
         run: ./gradlew :dokka
       - name: Publish Dokka
-        uses: netlify/actions/build@master
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=build/dokka/kounter --prod
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DIR: build/dokka/kounter
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
