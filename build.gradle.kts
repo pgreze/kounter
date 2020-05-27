@@ -36,6 +36,26 @@ tasks.jacocoTestReport {
     }
 }
 
+val moveCss by tasks.registering {
+    description = "Move style.css in kounter folder, easier for distribution."
+    fun File.rewriteStyleLocations() {
+        readText().replace("../style.css", "style.css")
+            .also { writeText(it) }
+    }
+    fun File.recursivelyRewriteStyleLocations() {
+        list()?.map(this::resolve)?.forEach {
+            if (it.isDirectory) it.recursivelyRewriteStyleLocations() else it.rewriteStyleLocations()
+        }
+    }
+    doLast {
+        val dokkaOutputDirectory = file(tasks.dokka.get().outputDirectory)
+        val kounterFolder = dokkaOutputDirectory.resolve("kounter")
+        kounterFolder.recursivelyRewriteStyleLocations()
+        dokkaOutputDirectory.resolve("style.css").also {
+            it.renameTo(kounterFolder.resolve(it.name))
+        }
+    }
+}
 tasks.dokka {
     outputFormat = "html"
     outputDirectory = "$buildDir/dokka"
@@ -47,6 +67,7 @@ tasks.dokka {
             lineSuffix = "#L"
         }
     }
+    finalizedBy(moveCss)
 }
 
 repositories {
