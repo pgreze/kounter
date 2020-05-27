@@ -7,6 +7,7 @@ plugins {
     // Deploy
     `maven-publish`
     id("com.jfrog.bintray") version "1.8.5"
+    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 group = "com.github.pgreze"
@@ -32,6 +33,19 @@ tasks.jacocoTestReport {
     reports {
         xml.isEnabled = true
         html.isEnabled = System.getenv("CI") != "true"
+    }
+}
+
+tasks.dokka {
+    outputFormat = "html"
+    outputDirectory = "$buildDir/dokka"
+    configuration {
+        sourceLink {
+            // URL showing where the source code can be accessed through the web browser
+            url = "https://github.com/pgreze/kounter/tree/master/"
+            // Suffix which is used to append the line number to the URL. Use #L for GitHub
+            lineSuffix = "#L"
+        }
     }
 }
 
