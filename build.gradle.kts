@@ -88,10 +88,18 @@ dependencies {
     testImplementation(kotlin("reflect"))
 }
 
+val sourcesJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("sources")
+    from(sourceSets.getByName("main").allSource.srcDirs)
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
+            artifact(sourcesJar.get()) {
+                classifier = "sources"
+            }
             pom {
                 url.set(github)
                 licenses {
