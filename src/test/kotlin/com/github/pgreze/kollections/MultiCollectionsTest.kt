@@ -1,5 +1,8 @@
 package com.github.pgreze.kollections
 
+import com.github.pgreze.kounter.Counter
+import com.github.pgreze.kounter.counterOf
+import com.github.pgreze.kounter.mutableCounterOf
 import org.amshove.kluent.shouldBeEqualTo
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
