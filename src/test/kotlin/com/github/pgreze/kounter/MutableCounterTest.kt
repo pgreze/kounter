@@ -1,5 +1,6 @@
-package com.github.pgreze.kollections
+package com.github.pgreze.kounter
 
+import com.github.pgreze.kollections.shouldBeEqualToOriginalMap
 import org.amshove.kluent.shouldBeEqualTo
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -59,14 +60,32 @@ class MutableCounterTest : Spek({
             )
         }
         it("support Array") {
-            mutableCounterOf(arrayOf('a', 'b', 'b', 'c', 'c', 'c')) shouldBeEqualTo mapOf(
+            mutableCounterOf(
+                arrayOf(
+                    'a',
+                    'b',
+                    'b',
+                    'c',
+                    'c',
+                    'c'
+                )
+            ) shouldBeEqualTo mapOf(
                 'a' to 1,
                 'b' to 2,
                 'c' to 3
             )
         }
         it("support list") {
-            mutableCounterOf(listOf('a', 'b', 'b', 'c', 'c', 'c')) shouldBeEqualTo mapOf(
+            mutableCounterOf(
+                listOf(
+                    'a',
+                    'b',
+                    'b',
+                    'c',
+                    'c',
+                    'c'
+                )
+            ) shouldBeEqualTo mapOf(
                 'a' to 1,
                 'b' to 2,
                 'c' to 3
