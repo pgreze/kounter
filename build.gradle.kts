@@ -16,6 +16,10 @@ version = tagVersion?.trimStart('v') ?: "WIP"
 description = "Counting easily with Kotlin"
 val github = "https://github.com/pgreze/kounter"
 
+java {
+    withSourcesJar()
+}
+
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
 }
@@ -88,18 +92,10 @@ dependencies {
     testImplementation(kotlin("reflect"))
 }
 
-val sourcesJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("sources")
-    from(sourceSets.getByName("main").allSource.srcDirs)
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
             from(components["java"])
-            artifact(sourcesJar.get()) {
-                classifier = "sources"
-            }
             pom {
                 url.set(github)
                 licenses {
