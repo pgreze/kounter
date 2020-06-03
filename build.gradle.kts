@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.3.72"
+    kotlin("jvm") version "1.3.72"
     // Lint
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
