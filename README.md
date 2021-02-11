@@ -5,7 +5,7 @@ Choose the easy-to-use **Counter** or the fully flexible **MapWithDefault**.
 
 ```kotlin
 dependencies {
-    // Check 🔝 jcenter badge 🔝 for the latest $version
+    // Check the 🔝 maven central badge 🔝 for the latest $version
     implementation("com.github.pgreze:kounter:$version")
 }
 
