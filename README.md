@@ -1,7 +1,7 @@
-# Kounter [![jcenter](https://api.bintray.com/packages/pgreze/maven/kounter/images/download.svg)](https://bintray.com/pgreze/maven/kounter/_latestVersion) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master) ![codecov](https://codecov.io/gh/pgreze/kounter/branch/master/graph/badge.svg) [![](https://img.shields.io/badge/dokka-read-blue)](https://kounter.netlify.app/)
+# Kounter [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) ![Build](https://github.com/pgreze/kounter/workflows/Build/badge.svg?branch=master) ![codecov](https://codecov.io/gh/pgreze/kounter/branch/master/graph/badge.svg)
 Choose the easy-to-use **Counter** or the fully flexible **MapWithDefault**.
 
-## Installation
+## Installation  [![central](https://maven-badges.herokuapp.com/maven-central/com.github.pgreze/kounter/badge.svg?style={style})](https://search.maven.org/artifact/com.github.pgreze/kounter)
 
 ```kotlin
 dependencies {
@@ -14,7 +14,7 @@ repositories {
 }
 ```
 
-## Usage
+## Usage [![](https://img.shields.io/badge/dokka-read-blue)](https://kounter.netlify.app/)
 
 ### Counter / MutableCounter
 
