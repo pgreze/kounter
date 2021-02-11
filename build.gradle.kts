@@ -1,13 +1,10 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
-    // Lint
+    kotlin("jvm") version "1.4.30"
+    id("org.jetbrains.dokka") version "0.10.1"
     jacoco
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("io.gitlab.arturbosch.detekt") version "1.7.4"
-    // Deploy
     `maven-publish`
-    id("com.jfrog.bintray") version "1.8.5"
-    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 group = "com.github.pgreze"
@@ -109,33 +106,6 @@ publishing {
                     developerConnection.set("scm:git:ssh://github.com:pgreze/kounter.git")
                     url.set(github)
                 }
-            }
-        }
-    }
-}
-
-bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_API_KEY")
-
-    setPublications("maven")
-
-    pkg.apply {
-        repo = "maven"
-        name = project.name
-        desc = project.description
-        websiteUrl = github
-        vcsUrl = "$github.git"
-        setLicenses("Apache-2.0")
-        publish = true
-        publicDownloadNumbers = true
-        version.apply {
-            desc = project.description
-            gpg.apply {
-                // Determines whether to GPG sign the files (default: false)
-                sign = true
-                // The passphrase for GPG signing (optional)
-                passphrase = System.getenv("BINTRAY_GPG_PASSWORD")
             }
         }
     }
