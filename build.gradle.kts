@@ -19,6 +19,7 @@ val myDescription = "Counting easily with Kotlin".also { description = it }
 val githubUrl = "https://github.com/pgreze/kounter"
 
 java {
+    withJavadocJar()
     withSourcesJar()
 }
 
@@ -106,21 +107,6 @@ val propOrEnv: (String, String) -> String? = { key, envName -> local?.get(key)?.
 val ossrhUsername = propOrEnv("ossrh.username", "OSSRH_USERNAME")
 val ossrhPassword = propOrEnv("ossrh.password", "OSSRH_PASSWORD")
 
-// Setup signing
-mapOf(
-    "signing.keyId" to "SIGNING_KEY_ID",
-    "signing.password" to "SIGNING_PASSWORD",
-    "signing.secretKeyRingFile" to "SIGNING_SECRET_KEY_RING_FILE"
-).forEach { (key, envName) ->
-    val value = propOrEnv(key, envName)
-        ?.let {
-            if (key.contains("File")) {
-                rootProject.file(it).absolutePath
-            } else it
-        }
-    rootProject.ext.set(key, value)
-}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -164,6 +150,22 @@ publishing {
             }
         }
     }
+}
+mapOf(
+    "signing.keyId" to "SIGNING_KEY_ID",
+    "signing.password" to "SIGNING_PASSWORD",
+    "signing.secretKeyRingFile" to "SIGNING_SECRET_KEY_RING_FILE"
+).forEach { (key, envName) ->
+    val value = propOrEnv(key, envName)
+        ?.let {
+            if (key.contains("File")) {
+                rootProject.file(it).absolutePath
+            } else it
+        }
+    ext.set(key, value)
+}
+signing {
+    sign(publishing.publications)
 }
 
 // https://github.com/Codearte/gradle-nexus-staging-plugin
