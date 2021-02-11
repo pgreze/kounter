@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     kotlin("jvm") version "1.4.30"
     id("org.jetbrains.dokka") version "0.10.1"
@@ -5,13 +7,16 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
     id("io.gitlab.arturbosch.detekt") version "1.7.4"
     `maven-publish`
+    signing
+    id("io.codearte.nexus-staging") version "0.22.0"
 }
 
-group = "com.github.pgreze"
+val myGroup = "com.github.pgreze".also { group = it }
+val myArtifactId = "kounter"
 val tagVersion = System.getenv("GITHUB_REF")?.split('/')?.last()
-version = tagVersion?.trimStart('v') ?: "WIP"
-description = "Counting easily with Kotlin"
-val github = "https://github.com/pgreze/kounter"
+val myVersion = (tagVersion?.trimStart('v') ?: "WIP").also { version = it }
+val myDescription = "Counting easily with Kotlin".also { description = it }
+val githubUrl = "https://github.com/pgreze/kounter"
 
 java {
     withSourcesJar()
@@ -39,7 +44,7 @@ tasks.jacocoTestReport {
 }
 
 val moveCss by tasks.registering {
-    description = "Move style.css in kounter folder, easier for distribution."
+    description = "Move style.css in the base folder, easier for distribution."
     fun File.rewriteStyleLocations() {
         readText().replace("../style.css", "style.css")
             .also { writeText(it) }
@@ -51,10 +56,10 @@ val moveCss by tasks.registering {
     }
     doLast {
         val dokkaOutputDirectory = file(tasks.dokka.get().outputDirectory)
-        val kounterFolder = dokkaOutputDirectory.resolve("kounter")
-        kounterFolder.recursivelyRewriteStyleLocations()
+        val baseFolder = dokkaOutputDirectory.resolve(myArtifactId)
+        baseFolder.recursivelyRewriteStyleLocations()
         dokkaOutputDirectory.resolve("style.css").also {
-            it.renameTo(kounterFolder.resolve(it.name))
+            it.renameTo(baseFolder.resolve(it.name))
         }
     }
 }
@@ -64,7 +69,7 @@ tasks.dokka {
     configuration {
         sourceLink {
             // URL showing where the source code can be accessed through the web browser
-            url = "https://github.com/pgreze/kounter/tree/${tagVersion ?: "master"}/"
+            url = "$githubUrl/tree/${tagVersion ?: "master"}/"
             // Suffix which is used to append the line number to the URL. Use #L for GitHub
             lineSuffix = "#L"
         }
@@ -89,24 +94,82 @@ dependencies {
     testImplementation(kotlin("reflect"))
 }
 
+//
+// Publishing
+//
+
+val local = rootProject.file("local.properties")
+    .takeIf(File::exists)
+    ?.let { f -> f.reader().use { Properties().also { p -> p.load(it) } } }
+val propOrEnv: (String, String) -> String? = { key, envName -> local?.get(key)?.toString() ?: System.getenv(envName) }
+
+val ossrhUsername = propOrEnv("ossrh.username", "OSSRH_USERNAME")
+val ossrhPassword = propOrEnv("ossrh.password", "OSSRH_PASSWORD")
+
+// Setup signing
+mapOf(
+    "signing.keyId" to "SIGNING_KEY_ID",
+    "signing.password" to "SIGNING_PASSWORD",
+    "signing.secretKeyRingFile" to "SIGNING_SECRET_KEY_RING_FILE"
+).forEach { (key, envName) ->
+    val value = propOrEnv(key, envName)
+        ?.let {
+            if (key.contains("File")) {
+                rootProject.file(it).absolutePath
+            } else it
+        }
+    rootProject.ext.set(key, value)
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            groupId = myGroup
+            artifactId = myArtifactId
+            version = myVersion
+
             from(components["java"])
+
             pom {
-                url.set(github)
+                name.set(myArtifactId)
+                description.set(myDescription)
+                url.set(githubUrl)
                 licenses {
                     license {
                         name.set("The Apache License, Version 2.0")
                         url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
                 }
+                developers {
+                    developer {
+                        id.set("pgreze")
+                        name.set("Pierrick Greze")
+                    }
+                }
                 scm {
-                    connection.set("$github.git")
+                    connection.set("$githubUrl.git")
                     developerConnection.set("scm:git:ssh://github.com:pgreze/kounter.git")
-                    url.set(github)
+                    url.set(githubUrl)
                 }
             }
         }
     }
+    repositories {
+        maven {
+            name = "sonatype"
+            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+    }
+}
+
+// https://github.com/Codearte/gradle-nexus-staging-plugin
+nexusStaging {
+    packageGroup = myGroup
+    stagingProfileId = propOrEnv("sonatype.staging.profile.id", "SONATYPE_STAGING_PROFILE_ID")
+    username = ossrhUsername
+    password = ossrhPassword
 }
